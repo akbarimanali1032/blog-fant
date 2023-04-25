@@ -1,18 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
-import Blog from './Componet/Blog';
-import Card from "./Componet/Card";
-import New from "./Componet/New";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from './Componet/Dashboard';
+import Navbar from './Componet/Navbar';
+import LearnMor from './Componet/LearnMor';
+import AddBlog from './Componet/AddBlog';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={ <Blog /> } />
-        <Route path="card" element={ <Card /> } />
-        <Route path="New" element={ <New/> } />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={ <Dashboard /> } />
+          <Route path='/learn-mor' element={ <LearnMor /> } />
+          <Route path='/add-blog' element={ <AddBlog /> } />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

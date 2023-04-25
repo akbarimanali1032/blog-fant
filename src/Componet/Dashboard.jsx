@@ -1,25 +1,24 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Card from './Card'
+import BlogBox from './BlogBox'
 
-const New = () => {
-    const [loadder, setLoadder] = useState(true);
+const Dashboard = () => {
+    // const [loadder, setLoadder] = useState(true);
     const [blogDatas, setBlogDatas] = useState([]);
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoadder(false);
-            setBlogDatas([
-                { id: 1, title: "lorem okd iuhghh", describe: "loreremjhfhdfdfhfhjfh" },
-                { id: 2, title: "lorem okd iuhghh", describe: "loreremjhfhdfdfhfhjfh" },
-                { id: 3, title: "lorem okd iuhghh", describe: "loreremjhfhdfdfhfhjfh" },
-                { id: 4, title: "lorem okd iuhghh", describe: "loreremjhfhdfdfhfhjfh" },
-                { id: 5, title: "lorem okd iuhghh", describe: "loreremjhfhdfdfhfhjfh" },
-                { id: 6, title: "lorem okd iuhghh", describe: "loreremjhfhdfdfhfhjfh" },
-                { id: 7, title: "lorem okd iuhghh", describe: "loreremjhfhdfdfhfhjfh" },
-            ])
-        }, 5000);
-
+        const fetchApi = async () => {
+            fetch(`http://localhost:1030/api/getAllBlogs`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            }).then((res) => res.json())
+                .then((data) => {
+                    setBlogDatas(data.dataAdd)
+                })
+                .catch((error) => console.log('error::: ', error))
+        }
+        fetchApi();
     }, [])
 
     return (
@@ -40,25 +39,18 @@ const New = () => {
                         </div>
                     </div>
                 </div>
-                {
-                    loadder ?
-                        <div className="loader"></div>
-                        :
-                        <div style={ { display: "flex", flexWrap: "wrap", justifyContent: "space-between" } }>
-                            {
-                                blogDatas.map((data, index) => (
-                                    <div key={ index }>
-                                        <Card
-                                            all={ data }
-                                        />
-                                    </div>
-                                ))
-                            }
-                        </div>
-                }
+                <div style={ { display: "flex", flexWrap: "wrap", justifyContent: "space-evenly" } }>
+                    {
+                        blogDatas.slice(0, 20).map((data, index) => (
+                            <div style={ { margin: "10px 0" } } key={ index }>
+                                <BlogBox data={ data } />
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         </>
     )
 }
 
-export default New
+export default Dashboard
